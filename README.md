@@ -1,89 +1,72 @@
-# Student Hub
+# Saif-Eddine Bahiri — Portfolio
 
-Student Hub is a full-stack academic platform with a Django REST backend and a React/Vite frontend.
+Bilingual (French / English) portfolio and print-ready CV of a Bachelor's student in Cybersecurity & Cloud Computing, built as a fast, fully static site with no backend.
 
-## Stack
+> **Live site:** https://portofolio-five-weld-92.vercel.app
 
-- Backend: Django 5, Django REST Framework, Simple JWT, django-allauth, dj-rest-auth
-- Frontend: React 18, Vite, TailwindCSS, Framer Motion, i18next
-- Database: PostgreSQL through `DATABASE_URL` such as Neon
-- Storage: Cloudinary raw media storage
-- Email: SMTP configured through environment variables
+## What it presents
 
-## Local Setup
+- **Profile and studies**: Bachelor's in Cybersecurity & Cloud Computing (ESTK, Cadi Ayyad University), after a DUT in Computer Science.
+- **Internship experience**: cybersecurity and penetration testing, full-stack development, IT operations in banking.
+- **Projects**: ASTA (an autonomous security testing agent, used only within an authorized scope) and Student Hub (a multi-role Django and React platform).
+- **Skills**: security tooling, languages, frameworks, databases, networks and methods.
+- **CV**: downloadable PDF in French and in English, generated from the same content.
 
-### Backend
+## Tech stack
 
-```bash
-cd backend
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-copy .env.example .env
-python manage.py migrate
-python manage.py createsuperuser
-python manage.py runserver
-```
+| Area | Technology |
+|---|---|
+| Build tool | Vite |
+| Language | TypeScript (vanilla, no framework) |
+| Styling | Modular CSS with design tokens, print stylesheet for the CV |
+| Animation | GSAP, ScrollTrigger, Lenis (smooth scrolling) |
+| CV generation | Playwright (headless Chromium) renders selectable-text PDFs |
+| Quality | ESLint, strict TypeScript, layout QA script |
+| Deployment | Vercel and GitHub Pages (GitHub Actions workflow) |
 
-Set the backend `.env` values before running migrations in a production-like environment:
+## Features
 
-```env
-SECRET_KEY=replace-me
-DEBUG=True
-ALLOWED_HOSTS=localhost,127.0.0.1
-DATABASE_URL=postgresql://user:password@host/dbname?sslmode=require
-CLOUDINARY_CLOUD_NAME=replace-me
-CLOUDINARY_API_KEY=replace-me
-CLOUDINARY_API_SECRET=replace-me
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_HOST_USER=replace-me
-EMAIL_HOST_PASSWORD=replace-me
-DEFAULT_FROM_EMAIL=Student Hub <noreply@studenthub.com>
-GOOGLE_CLIENT_ID=replace-me
-GOOGLE_CLIENT_SECRET=replace-me
-FRONTEND_URL=http://localhost:5173
-CORS_ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
-```
+- French and English versions driven by two JSON files (`src/content/fr.json`, `src/content/en.json`); `?lang=en` forces English.
+- Light and dark theme, with theme and language remembered in local storage.
+- Print-ready CV page and two committed PDFs, so deployments do not need a browser.
+- Search and social assets: sitemap, robots file, web manifest, Open Graph preview and touch icon.
+- No backend: contact actions use email, phone and clipboard APIs only.
+- Self-hosted fonts with their open font licences.
 
-### Frontend
+## Skills demonstrated
 
-```bash
-cd frontend
-npm install
-copy .env.example .env
+- Front-end engineering without a framework: TypeScript, modular CSS, motion design.
+- Internationalization with a single source of truth for content.
+- Build automation: PDF generation, linting, type checking and CI deployment.
+- Attention to performance, accessibility and responsive layout.
+- Responsible presentation of security work: no exploit instructions or payloads published.
+
+## Run locally
+
+```sh
+npm ci
 npm run dev
 ```
 
-Frontend environment:
+Open the local URL printed by Vite.
 
-```env
-VITE_API_URL=http://localhost:8000/api/v1
-VITE_GOOGLE_CLIENT_ID=replace-me
-VITE_APP_NAME=Student Hub
+## Build
+
+Install the Playwright Chromium browser once (or set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to an installed Chrome or Chromium):
+
+```sh
+npx playwright install chromium
+npm run build
+npm run lint
 ```
 
-## Deployment
+`npm run build` produces the static site in `dist/`. `npm run build:full` also regenerates both CV PDFs and the PNG assets.
 
-### Frontend on Vercel
+## Deploy
 
-1. Import `/frontend` as the project root.
-2. Set build command to `npm run build`.
-3. Set output directory to `dist`.
-4. Add `VITE_API_URL` pointing to the deployed backend `/api/v1` URL.
-5. Keep the included `frontend/vercel.json` for SPA rewrites.
+- **Vercel**: import the repository with the Vite preset, build command `npm run build`, output directory `dist`.
+- **GitHub Pages**: the workflow in `.github/workflows/pages.yml` builds and publishes `dist` from `main`. Enable GitHub Pages with GitHub Actions as the source.
 
-### Backend on Railway or Render
+## Author
 
-1. Set project root to `/backend`.
-2. Use `pip install -r requirements.txt` as the install command.
-3. Use the included `Procfile`: `gunicorn config.wsgi:application --bind 0.0.0.0:$PORT`.
-4. Add all backend environment variables from `backend/.env.example`.
-5. Run `python manage.py migrate`.
-6. Run `python manage.py collectstatic --noinput`.
-
-## Suggested Commit Messages
-
-- `Add backend database migrations`
-- `Add full React Student Hub interface`
-- `Add deployment README for Student Hub`
+**Saif-Eddine Bahiri** — [GitHub](https://github.com/saif-sudo-afk)
